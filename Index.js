@@ -1,9 +1,10 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import cors from 'cors'
-
 import express  from 'express'
+import connectDB from './src/config'
 const app = express()
+connectDB
 
 
 app.get('/', (req, res) => {
