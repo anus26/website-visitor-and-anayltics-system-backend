@@ -3,19 +3,29 @@ import Visiter from "../modles/visitormodles.js"
 const visiter=async(req,res)=>{
   const ip=req.clientIp
   const browser=req.useragent.browser
-  const os=req.useragent.os
-  const platform=req.useragent.platform
-  console.log({ ip, browser, os, platform });
+   const  device=`${req.useragent.platform}-${req.useragent.os}`
+  console.log({ ip, browser ,device});
 
-  res.send("Visitor data captured");
+//   res.send("Visitor data captured");
   const  visit= new  Visiter({
-    id:ip,
+    ip,
     browser,
-    device:`${os}-${platform}`
+    device,
 
   })
     await visit.save();
 
-  res.status(200).json({ message: 'Visitor data captured' });
+  res.status(200).json({ message: 'Visitor data captured' ,visit});
 }
-export default visiter
+
+
+
+const getallvisitor=async(req,res)=>{
+    try {
+       const visits =await Visiter.find()
+       res.status(200).json({visits}) 
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch visitor data" }); 
+    }
+}
+export {visiter ,getallvisitor} 

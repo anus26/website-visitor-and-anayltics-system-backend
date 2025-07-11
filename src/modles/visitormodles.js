@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const  visiterSchema=new mongoose.Schema({
-    id:String,
+    ip:String,
     browser:String,
     device:String,
     visitedAt:{
