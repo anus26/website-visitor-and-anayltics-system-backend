@@ -8,7 +8,8 @@
   "main": "Index.js",
   "scripts": {
     "start": "node Index.js",
-    "dev": "nodemon Index.js"
+    "dev": "nodemon Index.js",
+    "build": "echo 'No build step required for this Node.js application'"
   },
   "dependencies": {
     "browser-or-node": "^3.0.0",
