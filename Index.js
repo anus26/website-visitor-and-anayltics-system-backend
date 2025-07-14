@@ -1,48 +1,38 @@
+// ✅ Load .env at the very top
+import dotenv from 'dotenv'
+dotenv.config() // ⚠️ This must be first
+
+// Then import everything else
 import express from 'express'
 import http from 'http'
-// import { Server } from 'socket.io'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import connectDB from './src/config/index.js'
 import visitorroutes from './src/routes/visitorroutes.js'
-import  useragent  from 'express-useragent'
-import requestIp from 'request-ip';
+import useragent from 'express-useragent'
+import requestIp from 'request-ip'
 
-dotenv.config()
-
+// Express App Setup
 const app = express()
 const server = http.createServer(app)
-app.use(cors())
 
-connectDB()
-
+// Middleware
 app.use(cors())
 app.use(express.json())
 app.use(requestIp.mw())
 app.use(useragent.express())
 
-// // ✅ Socket.io Events
-// io.on('connection', (socket) => {
-//   console.log('🟢 A user connected:', socket.id)
+// Database
+connectDB()
 
-  // Example: Send new visitor to frontend
-  // socket.on('new-visitor', (data) => {
-  //   console.log('New Visitor:', data)
-  //   // Broadcast to admin dashboard
-  //   io.emit('visitor-update', data)
-  // })
-
-//   socket.on('disconnect', () => {
-//     console.log('🔴 User disconnected:', socket.id)
-//   })
-// })
-
-// ✅ Basic route
+// Routes
 app.get('/', (req, res) => {
-  res.send('Socket.IO Server is Running')
+  res.send('✅ Backend is running')
 })
-app.use('/api',visitorroutes)
-// ✅ Start Server
-server.listen(process.env.PORT || 5000, () => {
-  console.log(`✅ Server running on port ${process.env.PORT}`)
+app.use('/api', visitorroutes)
+
+// Server Listen
+const PORT = process.env.PORT || 5000
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`)
 })
+
